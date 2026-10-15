@@ -1,0 +1,27 @@
+# Phase 1 dependencies.
+#
+# The domain layer still depends on nothing beyond the Python standard library;
+# every package below is used only by adapters, infrastructure, or the tests.
+# Do NOT add FastAPI, LangGraph, LangChain, SQLAlchemy, Redis, or any other
+# future-phase dependency here.
+
+# --- Adapters (frameworks & drivers) ---
+openai
+tavily-python
+
+# --- Configuration ---
+python-dotenv
+
+# --- Database & Auth ---
+sqlalchemy
+psycopg2-binary
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+
+# --- Dev / test ---
+pytest
+pytest-cov
+fastapi[standard]
+langgraph
+langchain-core

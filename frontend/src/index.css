@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Scholaris — Dark Academia Design System
+   ============================================================================ */
+
+@theme {
+  /* --- Background palette (deep warm darks) --- */
+  --color-bg-base: #0D0B08;
+  --color-bg-surface: #161310;
+  --color-bg-elevated: #1E1A15;
+  --color-bg-card: #1A1714;
+  --color-bg-input: #131110;
+
+  /* --- Gold accent palette --- */
+  --color-gold-50: #FDF8EC;
+  --color-gold-100: #F5E6C4;
+  --color-gold-200: #E8D09E;
+  --color-gold-300: #D4B86A;
+  --color-gold-400: #C9A84C;
+  --color-gold-500: #B8943A;
+  --color-gold-600: #9A7B2E;
+  --color-gold-700: #7A6124;
+  --color-gold-800: #5A471A;
+  --color-gold-900: #3A2E11;
+
+  /* --- Text palette (warm creams) --- */
+  --color-text-primary: #E8E0D0;
+  --color-text-secondary: #B8AE9C;
+  --color-text-muted: #7A7264;
+  --color-text-faint: #5A5348;
+  --color-text-gold: #D4B86A;
+
+  /* --- Border palette --- */
+  --color-border-subtle: #2A2520;
+  --color-border-default: #3A3328;
+  --color-border-gold: #C9A84C33;
+  --color-border-gold-strong: #C9A84C66;
+
+  /* --- Status colors --- */
+  --color-status-success: #6EBB82;
+  --color-status-error: #D46464;
+  --color-status-warning: #D4A84C;
+  --color-status-info: #7AA2C9;
+  --color-status-active: #C9A84C;
+  --color-status-idle: #5A5348;
+
+  /* --- Semantic aliases --- */
+  --color-accent: #C9A84C;
+  --color-accent-hover: #D4B86A;
+  --color-accent-glow: #C9A84C40;
+
+  /* --- Spacing scale --- */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* --- Font families --- */
+  --font-serif: "Playfair Display", "Georgia", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* --- Border radius --- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+/* --- Typography utilities --- */
+@utility text-display {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+@utility text-heading-lg {
+  font-family: var(--font-serif);
+  font-size: 1.875rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+@utility text-heading-md {
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+@utility text-heading-sm {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+@utility text-body-lg {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+@utility text-body-md {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  font-weight: 400;
+}
+@utility text-body-sm {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+@utility text-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+@utility text-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ============================================================================
+   Base styles
+   ============================================================================ */
+
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-default) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-border-default);
+    border-radius: 3px;
+  }
+  body {
+    overscroll-behavior: none;
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+  }
+  ::selection {
+    background: var(--color-gold-600);
+    color: var(--color-gold-50);
+  }
+}
+
+/* ============================================================================
+   Keyframe animations
+   ============================================================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 16px 4px rgba(201, 168, 76, 0.15);
+  }
+}
+
+@keyframes glow-line {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes typewriter-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* --- Utility animation classes --- */
+@utility animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+@utility animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+@utility animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+@utility animate-pulse-gold {
+  animation: pulse-gold 2.5s ease-in-out infinite;
+}
+@utility animate-glow-line {
+  animation: glow-line 3s ease-in-out infinite;
+}
+@utility animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+@utility animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+@utility animate-blink {
+  animation: typewriter-blink 1s step-end infinite;
+}

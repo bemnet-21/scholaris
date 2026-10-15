@@ -1,0 +1,62 @@
+"""Main entry point for the FastAPI application."""
+
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+
+from infrastructure.config import ConfigError, load_env_file, load_config
+from adapters.controllers.research_controller import router as research_router
+from adapters.controllers.auth_controller import router as auth_router
+from infrastructure.api.dependencies import setup_dependencies
+from domain.exceptions import DomainError
+from infrastructure.db.database import init_db
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    config = load_config()
+    init_db(config.db.url)
+    yield
+
+
+def create_app() -> FastAPI:
+    """App factory that builds the FastAPI application."""
+    # Load .env into os.environ so config loaders can find the keys
+    load_env_file()
+
+    app = FastAPI(
+        title="Scholaris Research Engine",
+        description="Intelligent Autonomous Literature & Fact Engine",
+        version="0.1.0",
+        lifespan=lifespan
+    )
+    
+    config = load_config()
+    
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=config.cors.allowed_origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    
+    # Include the routers
+    app.include_router(auth_router)
+    app.include_router(research_router)
+    
+    # Setup dependency injection
+    setup_dependencies(app)
+    
+    # Add exception handlers
+    @app.exception_handler(ConfigError)
+    async def config_error_handler(request: Request, exc: ConfigError):
+        return JSONResponse(
+            status_code=503,
+            content={"detail": f"Service unavailable due to misconfiguration: {str(exc)}"}
+        )
+        
+    return app
+
+# Instantiate the app so the FastAPI CLI can discover it automatically
+app = create_app()
